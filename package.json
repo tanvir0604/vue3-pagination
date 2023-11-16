@@ -1,7 +1,7 @@
 {
-  "name": "@tanvir/vue3-pagination",
+  "name": "@shafkat/vue3-pagination",
   "description": "A pagination component for vue3",
-  "version": "0.1.2",
+  "version": "0.1.1",
   "private": false,
   "publishConfig": {
     "access": "public",
