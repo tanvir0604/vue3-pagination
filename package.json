@@ -1,0 +1,44 @@
+{
+  "name": "@tanvir/vue3-pagination",
+  "description": "A pagination component for vue3",
+  "version": "0.1.2",
+  "private": false,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/vue3-pagination.umd.cjs",
+  "module": "./dist/vue3-pagination.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vue3-pagination.js",
+      "require": "./dist/vue3-pagination.umd.cjs"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "release": "standard-version && git push --follow-tags && npm publish",
+    "dev": "vite",
+    "build": "run-p type-check \"build-only {@}\" --",
+    "preview": "vite preview",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
+  },
+  "dependencies": {
+    "vue": "^3.3.4"
+  },
+  "devDependencies": {
+    "@tsconfig/node18": "^18.2.2",
+    "@types/node": "^18.18.5",
+    "@vitejs/plugin-vue": "^4.4.0",
+    "@vue/tsconfig": "^0.4.0",
+    "npm-run-all2": "^6.1.1",
+    "typescript": "~5.2.0",
+    "vite": "^4.4.11",
+    "vue-tsc": "^1.8.19"
+  }
+}
