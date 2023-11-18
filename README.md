@@ -1,6 +1,8 @@
 # vue3-pagination
 
 > A vue3 component to create a server side pagination system
+> 
+> This pagination supports configuring the number of data show per page and search/filter system.
 
 ## Getting Started
 
@@ -11,7 +13,7 @@ These instructions will help you to install the package on your local machine an
 installation process is very simple:
 
 ```sh
-$ cd PROJECT
+$ cd VUE3PROJECT
 $ npm i @shafkat/vue3-pagination
 ```
 
@@ -26,7 +28,7 @@ $ import { Pagination } from "@shafkat/vue3-pagination";
 ### Use the component
 
 ```sh
-$ <Pagination url="your_server_url" class-name="test"></Pagination>
+$ <Pagination url="your_api_server_url"></Pagination>
 ```
 
 ## API
@@ -57,19 +59,19 @@ Example:
 
 ```tsx
 <script setup lang="ts">
-    import { Pagination } from "@shafkat/vue3-pagination";
     import { ref } from 'vue';
+    import { Pagination } from "@shafkat/vue3-pagination";
     const url = ref('http://your-api-server-url');
-    const className = 'my-pagination';
+    const className = 'my-pagination'; {/*optional to modify design*/}
     const items = ref([]);
-    const filters = ref({
-    param1: 'value1',
-    param2: 'value2'
-});
+    const filters = ref({ // optional. You can implement search/filter this way
+        param1: 'value1',
+        param2: 'value2'
+    });
     const update = (res) => {
-    console.log(res);
-    items.value = res.items;
-}
+        console.log(res);
+        items.value = res.items;
+    }
 </script>
 
 <template>
@@ -88,16 +90,16 @@ Example:
 
 <style>
     .my-pagination .page-link{
-    background-color: #2c3e50;
-    color: white;
-}
+        background-color: #2c3e50;
+        color: white;
+    }
     .my-pagination .page-link:hover{
-    opacity: .8;
-}
+        opacity: .8;
+    }
     .my-pagination .active .page-link{
-    background-color: white;
-    color: #2c3e50;
-}
+        background-color: white;
+        color: #2c3e50;
+    }
 </style>
 
 ```
@@ -108,9 +110,10 @@ Example:
 
 ### Response data from server
 
-| Name   | Default value | Description                                                                                                                                                                  |
-|--------| --- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| total_items | 0 | Required - Total number of items should be returned from server. to increase peformance you can do the count query only when you get 0 for this parameter value as a request |
+| Name        | Default value | Description                                                                                                                                                                  |
+|-------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| total_items | 0             | Required - Total number of items should be returned from server. to increase peformance you can do the count query only when you get 0 for this parameter value as a request |
+| items*      | {}            | Required - Return all pages data from the server. You can rename it according to your choice.                                                                                |
 
 If present, the request will be delayed by the given amount of time
 
@@ -142,23 +145,12 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 5.  Push to the branch: `git push origin my-new-feature`
 6.  Submit a pull request :sunglasses:
 
-## Credits
-
-TODO: Write credits
-
-## Built With
-
-* Dropwizard - Bla bla bla
-* Maven - Maybe
-* Atom - ergaerga
-* Love
-
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/tanvir0604/vue3-pagination/tags).
 
 ## Authors
 
 * **Md Shafkat Hussain Tanvir** - *Initial work* - [tanvir](https://github.com/tanvir0604)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/tanvir0604/vue3-pagination/contributors) who participated in this project.
