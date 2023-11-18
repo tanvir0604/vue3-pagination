@@ -2,28 +2,6 @@
 
 > A vue3 component to create a server side pagination system
 
-## Table of contents
-
-- [Project Name](#project-name)
-   - [Table of contents](#table-of-contents)
-   - [Getting Started](#getting-started)
-   - [Installation](#installation)
-   - [Usage](#usage)
-      - [Serving the app](#serving-the-app)
-      - [Running the tests](#running-the-tests)
-      - [Building a distribution version](#building-a-distribution-version)
-      - [Serving the distribution version](#serving-the-distribution-version)
-   - [API](#api)
-      - [useBasicFetch](#usebasicfetch)
-         - [Options](#options)
-      - [fetchData](#fetchdata)
-   - [Contributing](#contributing)
-   - [Credits](#credits)
-   - [Built With](#built-with)
-   - [Versioning](#versioning)
-   - [Authors](#authors)
-   - [License](#license)
-
 ## Getting Started
 
 These instructions will help you to install the package on your local machine and create a server side pagination system in a minute.
@@ -53,127 +31,104 @@ $ <Pagination url="your_server_url" class-name="test"></Pagination>
 
 ## API
 
-#### Options
+#### Props
 
-| Name            | Type   | Default | Details                                                          |
-|-----------------|--------|---------|------------------------------------------------------------------|
-| url             | String | NULL    | Required - Server url from where data will be fetched            |
-| filters         | Object | {}      | Optional - Send all your search options here as a json data      |
-| per-page        | Number | 20      | Optional - This determines how many items will be shown per page |
-| default-page-no | Number | 1       | Optional                                                         |
+| Name              | Type   | Default | Details                                                                     |
+|-------------------|--------|---------|-----------------------------------------------------------------------------|
+| url               | String | NULL    | Required - Server url from where data will be fetched                       |
+| filters           | Object | {}      | Optional - Send all your search options here as a json data                 |
+| per-page          | Number | 20      | Optional - This determines how many items will be shown per page            |
+| default-page-no   | Number | 1       | Optional - First loaded page number                                         |
+| first-button-text | String | First   | Optional - To change the text of first button. Html format allowed          |
+| last-button-text  | String | Last    | Optional - To change the text of last button. Html format allowed           |
+| next-button-text  | String | '>>'    | Optional - To change the text of next button. Html format allowed           |
+| prev-button-text  | String | '<<'    | Optional - To change the text of previous button. Html format allowed       |
+| class-name        | String | NULL    | Optional - This is the wrapper class. You can use this to change the design |
 
 
-If present, the request will be performed as soon as the component is mounted
+#### Events
+
+| Name   | Type   | Default | Details                                                               |
+|--------|--------|---------|-----------------------------------------------------------------------|
+| update | method | NULL    | Required - This function will be called upon successful fetching data |
+
 
 Example:
 
 ```tsx
-const MyComponent: React.FC = () => {
-  const { data, error, loading } = useBasicFetch('https://api.icndb.com/jokes/random');
+<script setup lang="ts">
+    import { Pagination } from "@shafkat/vue3-pagination";
+    import { ref } from 'vue';
+    const url = ref('http://your-api-server-url');
+    const className = 'my-pagination';
+    const items = ref([]);
+    const filters = ref({
+    param1: 'value1',
+    param2: 'value2'
+});
+    const update = (res) => {
+    console.log(res);
+    items.value = res.items;
+}
+</script>
 
-  if (error) {
-    return <p>Error</p>;
-  }
+<template>
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+        </tr>
+        <tr v-for="item in items">
+            <td>{{item.name}}</td>
+            <td>{{item.age}}</td>
+        </tr>
+    </table>
+    <Pagination :url="url" :class-name="className" :filters="filters" @update="update"></Pagination>
+</template>
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+<style>
+    .my-pagination .page-link{
+    background-color: #2c3e50;
+    color: white;
+}
+    .my-pagination .page-link:hover{
+    opacity: .8;
+}
+    .my-pagination .active .page-link{
+    background-color: white;
+    color: #2c3e50;
+}
+</style>
 
-  return (
-    <div className="App">
-      <h2>Chuck Norris Joke of the day</h2>
-      {data && data.value && <p>{data.value.joke}</p>}
-    </div>
-  );
-};
 ```
 
-`delay`
+> include bootstrap >= 5.0 for styling
+> 
+> include fontawesome for icons
 
-| Type | Default value | Description |
-| --- | --- | --- |
-| number | 0 | Time in milliseconds |
+### Response data from server
+
+| Name   | Default value | Description                                                                                                                                                                  |
+|--------| --- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| total_items | 0 | Required - Total number of items should be returned from server. to increase peformance you can do the count query only when you get 0 for this parameter value as a request |
 
 If present, the request will be delayed by the given amount of time
 
 Example:
 
-```tsx
-type Joke = {
-  value: {
-    id: number;
-    joke: string;
-  };
-};
-
-const MyComponent: React.FC = () => {
-  const { data, error, loading } = useBasicFetch<Joke>('https://api.icndb.com/jokes/random', 2000);
-
-  if (error) {
-    return <p>Error</p>;
-  }
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  return (
-    <div className="App">
-      <h2>Chuck Norris Joke of the day</h2>
-      {data && data.value && <p>{data.value.joke}</p>}
-    </div>
-  );
-};
-```
-
-### fetchData
-
-```js
-fetchData(url: string)
-```
-
-Perform an asynchronous http request against a given url
-
-```tsx
-type Joke = {
-  value: {
-    id: number;
-    joke: string;
-  };
-};
-
-const ChuckNorrisJokes: React.FC = () => {
-  const { data, fetchData, error, loading } = useBasicFetch<Joke>();
-  const [jokeId, setJokeId] = useState(1);
-
-  useEffect(() => {
-    fetchData(`https://api.icndb.com/jokes/${jokeId}`);
-  }, [jokeId, fetchData]);
-
-  const handleNext = () => setJokeId(jokeId + 1);
-
-  if (error) {
-    return <p>Error</p>;
-  }
-
-  const jokeData = data && data.value;
-
-  return (
-    <div className="Comments">
-      {loading && <p>Loading...</p>}
-      {!loading && jokeData && (
-        <div>
-          <p>Joke ID: {jokeData.id}</p>
-          <p>{jokeData.joke}</p>
-        </div>
-      )}
-      {!loading && jokeData && !jokeData.joke && <p>{jokeData}</p>}
-      <button disabled={loading} onClick={handleNext}>
-        Next Joke
-      </button>
-    </div>
-  );
-};
+```json
+{
+  "total_items": 3,
+  "items": [
+    {
+      "name": "A", "age": 20
+    },{
+      "name": "B", "age": 25
+    },{
+      "name": "C", "age": 30
+    }
+  ]
+}
 ```
 
 ## Contributing
@@ -204,10 +159,6 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **John Doe** - *Initial work* - [JohnDoe](https://github.com/JohnDoe)
+* **Md Shafkat Hussain Tanvir** - *Initial work* - [tanvir](https://github.com/tanvir0604)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-[MIT License](https://andreasonny.mit-license.org/2019) © Andrea SonnY

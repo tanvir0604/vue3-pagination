@@ -1,7 +1,7 @@
 {
   "name": "@shafkat/vue3-pagination",
   "description": "A pagination component for vue3",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "private": false,
   "publishConfig": {
     "access": "public",
@@ -10,16 +10,16 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/vue3-pagination.umd.cjs",
-  "module": "./dist/vue3-pagination.js",
+  "main": "./dist/vue3-pagination.umd.js",
+  "module": "./dist/vue3-pagination.mjs",
   "exports": {
     ".": {
-      "import": "./dist/vue3-pagination.js",
-      "require": "./dist/vue3-pagination.umd.cjs"
+      "import": "./dist/vue3-pagination.mjs",
+      "require": "./dist/vue3-pagination.umd.js",
+      "browser": "./dist/vue3-pagination.umd.js"
     },
     "./style.css": "./dist/style.css"
   },
-  "types": "./dist/index.d.ts",
   "scripts": {
     "release": "standard-version && git push --follow-tags && npm publish",
     "dev": "vite",
