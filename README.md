@@ -20,7 +20,7 @@ $ npm i @shafkat/vue3-pagination
 ### Import the component
 
 ```sh
-$ import Pagination from "vue3-pagination";
+$ import { Pagination } from "@shafkat/vue3-pagination";
 ```
 
 ### Use the component
