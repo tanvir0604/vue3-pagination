@@ -8,6 +8,8 @@ const filters = ref({
   param1: 'value1',
   param2: 'value2'
 });
+const headers = {'tokane': 'your-token-here', 'other-header': 'other-header-value'};
+const postData = {'param1': 'value1', 'param2': 'value2'};
 const update = (res) => {
   console.log(res);
   items.value = res.items;
@@ -25,7 +27,7 @@ const update = (res) => {
       <td>{{item.age}}</td>
     </tr>
   </table>
-  <Pagination :url="url" :class-name="className" :filters="filters" @update="update"></Pagination>
+  <Pagination :url="url" :class-name="className" :filters="filters" :headers="headers" :post-data="postData" @update="update"></Pagination>
 </template>
 
 <style>

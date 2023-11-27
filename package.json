@@ -1,7 +1,7 @@
 {
   "name": "@shafkat/vue3-pagination",
   "description": "A pagination component for vue3",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "private": false,
   "author": {
     "name": "Md Shafkat Hussain Tanvir",

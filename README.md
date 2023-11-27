@@ -3,7 +3,6 @@
 > A vue3 component to create a server side pagination system
 > 
 > This pagination supports configuring the number of data show per page and search/filter system.
-
 ## Getting Started
 
 These instructions will help you to install the package on your local machine and create a server side pagination system in a minute.
@@ -46,6 +45,8 @@ $ <Pagination url="your_api_server_url"></Pagination>
 | next-button-text  | String | '>>'    | Optional - To change the text of next button. Html format allowed           |
 | prev-button-text  | String | '<<'    | Optional - To change the text of previous button. Html format allowed       |
 | class-name        | String | NULL    | Optional - This is the wrapper class. You can use this to change the design |
+| headers           | Object | {}      | Optional - additional headers.                                              |
+| post-data         | Object | {}      | Optional - additional data.                                                 |
 
 
 #### Events
@@ -72,6 +73,8 @@ Example:
         console.log(res);
         items.value = res.items;
     }
+    const headers = {'tokane': 'your-token-here', 'other-header': 'other-header-value'};
+    const postData = {'param1': 'value1', 'param2': 'value2'};
 </script>
 
 <template>
@@ -101,7 +104,6 @@ Example:
         color: #2c3e50;
     }
 </style>
-
 ```
 
 > include bootstrap >= 5.0 for styling

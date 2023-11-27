@@ -34,6 +34,8 @@ const emits = defineEmits(['update']);
 const props = defineProps({
   url: { type: String },
   filters:{ type: Object },
+  headers:{ type: Object, required: false, default: {} },
+  postData:{ type: Object, required: false, default: {} },
   perPage:{ type: Number, default: 20 },
   defaultPageNo:{ type: Number, default: 1 },
   showLoader:{ type: Boolean, default: true },
@@ -83,6 +85,11 @@ const getData = () => {
 
   let that = this;
   let formdata = new URLSearchParams();
+
+  for(var key in props.postData){
+    formdata.append(key, props.postData[key]);
+  }
+
   formdata.append('filters',JSON.stringify(props.filters));
   formdata.append('total_items', totalItems.value);
   formdata.append('perpage', props.perPage);
@@ -92,7 +99,7 @@ const getData = () => {
   if(typeof csrf_name !== 'undefined'){
     formdata.append(csrf_name,csrf_hash);
   }
-  axios.post(props.url, formdata)
+  axios.post(props.url, formdata, {headers: props.headers})
       .then(function (response) {
         if(response.status == 200){
           if(totalItems.value == 0) {
