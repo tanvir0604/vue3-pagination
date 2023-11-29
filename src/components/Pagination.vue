@@ -29,7 +29,7 @@
 import {ref, onMounted, watch, toRef} from 'vue';
 import axios from "axios";
 
-const emits = defineEmits(['update']);
+const emits = defineEmits(['update', 'loaderStart', 'loaderEnd']);
 
 const props = defineProps({
   url: { type: String },
@@ -38,7 +38,6 @@ const props = defineProps({
   postData:{ type: Object, required: false, default: {} },
   perPage:{ type: Number, default: 20 },
   defaultPageNo:{ type: Number, default: 1 },
-  showLoader:{ type: Boolean, default: true },
   firstButtonText: { type: String, default: 'First' },
   lastButtonText: { type: String, default: 'Last' },
   nextButtonText: { type: String, default: '<i class="fa fa-angle-double-right" style="font-size: 12px;"></i>' },
@@ -55,8 +54,13 @@ const totalPages = ref(0);
 const filters = toRef(props, 'filters');
 const perPage = toRef(props, 'perPage');
 const sortBy = toRef(props, 'sortBy');
+const hasLoaderStart = ref(false);
+const hasLoaderEnd = ref(false);
 
 onMounted(() =>{
+  const instance = getCurrentInstance();
+  hasLoaderStart.value = !!instance?.arrts?.loaderStart;
+  hasLoaderEnd.value = !!instance?.arrts?.loaderEnd;
   getData();
 });
 
@@ -79,8 +83,8 @@ watch(sortBy, async (newValue, oldValue) => {
 });
 
 const getData = () => {
-  if(props.showLoader){
-    // savingModal(1, 'Loading');
+  if(hasLoaderStart.value){
+    emits('loaderStart');
   }
 
   let that = this;
@@ -114,8 +118,8 @@ const getData = () => {
       }).catch(function (error) {
         console.log(error);
       }).finally(function () {
-        if(props.showLoader){
-            // savingModal(0);
+        if(hasLoaderEnd.value){
+          emits('loaderEnd');
         }
       }
   );

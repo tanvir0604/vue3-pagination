@@ -51,9 +51,11 @@ $ <Pagination url="your_api_server_url"></Pagination>
 
 #### Events
 
-| Name   | Type   | Default | Details                                                               |
-|--------|--------|---------|-----------------------------------------------------------------------|
-| update | method | NULL    | Required - This function will be called upon successful fetching data |
+| Name        | Type   | Default | Details                                                               |
+|-------------|--------|---------|-----------------------------------------------------------------------|
+| update      | method | NULL    | Required - This function will be called upon successful fetching data |
+| loaderStart | method | NULL    | Required - This function will call when server api called started     |
+| loaderEnd   | method | NULL    | Required - This function will call when server api called completed   |
 
 
 Example:
