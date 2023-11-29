@@ -29,7 +29,7 @@
 import {ref, onMounted, watch, toRef} from 'vue';
 import axios from "axios";
 
-const emits = defineEmits(['update', 'loaderStart', 'loaderEnd']);
+const emits = defineEmits(['update']);
 
 const props = defineProps({
   url: { type: String },
@@ -44,7 +44,10 @@ const props = defineProps({
   prevButtonText: { type: String, default: '<i class="fa fa-angle-double-left" style="font-size: 12px;"></i>' },
   sortBy: { type : Number },
   sortOrder: { type : Number },
-  className: { type: String }
+  className: { type: String },
+  method: { type: String, default: 'POST', required: false },
+  loaderStart: { type: Function, required: false },
+  loaderEnd: { type: Function, required: false },
 });
 
 const pageNo = ref(1);
@@ -54,13 +57,8 @@ const totalPages = ref(0);
 const filters = toRef(props, 'filters');
 const perPage = toRef(props, 'perPage');
 const sortBy = toRef(props, 'sortBy');
-const hasLoaderStart = ref(false);
-const hasLoaderEnd = ref(false);
 
 onMounted(() =>{
-  const instance = getCurrentInstance();
-  hasLoaderStart.value = !!instance?.arrts?.loaderStart;
-  hasLoaderEnd.value = !!instance?.arrts?.loaderEnd;
   getData();
 });
 
@@ -83,8 +81,8 @@ watch(sortBy, async (newValue, oldValue) => {
 });
 
 const getData = () => {
-  if(hasLoaderStart.value){
-    emits('loaderStart');
+  if(props.loaderStart){
+    props.loaderStart();
   }
 
   let that = this;
@@ -103,7 +101,14 @@ const getData = () => {
   if(typeof csrf_name !== 'undefined'){
     formdata.append(csrf_name,csrf_hash);
   }
-  axios.post(props.url, formdata, {headers: props.headers})
+
+  let request = axios;
+  if(props.method.toLowerCase() == 'post'){
+    request = request.post(props.url, formdata, {headers: props.headers});
+  }else{
+    request = request.get(props.url, formdata, {headers: props.headers});
+  }
+  request
       .then(function (response) {
         if(response.status == 200){
           if(totalItems.value == 0) {
@@ -118,8 +123,8 @@ const getData = () => {
       }).catch(function (error) {
         console.log(error);
       }).finally(function () {
-        if(hasLoaderEnd.value){
-          emits('loaderEnd');
+        if(props.loaderEnd){
+          props.loaderEnd();
         }
       }
   );

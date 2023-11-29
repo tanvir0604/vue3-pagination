@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import Pagination from "@/components/Pagination.vue";
 import { ref } from 'vue';
-const url = ref('http://your-api-server-url');
+// const url = ref('http://your-api-server-url');
+const url = ref('https://jsonplaceholder.typicode.com/posts');
 const className = 'my-pagination';
 const items = ref([]);
 const filters = ref({
@@ -12,22 +13,28 @@ const headers = {'tokane': 'your-token-here', 'other-header': 'other-header-valu
 const postData = {'param1': 'value1', 'param2': 'value2'};
 const update = (res) => {
   console.log(res);
-  items.value = res.items;
+  items.value = res;
 }
+let loadingStart = () => {
+  console.log('loading...');
+};
+let loadingEnd = () => {
+  console.log('loading ends...');
+};
 </script>
 
 <template>
   <table class="table">
     <tr>
-      <th>Name</th>
-      <th>Age</th>
+      <th>Title</th>
+      <th>Body</th>
     </tr>
     <tr v-for="item in items">
-      <td>{{item.name}}</td>
-      <td>{{item.age}}</td>
+      <td>{{item.title}}</td>
+      <td>{{item.body}}</td>
     </tr>
   </table>
-  <Pagination :url="url" :class-name="className" :filters="filters" :headers="headers" :post-data="postData" @update="update"></Pagination>
+  <Pagination :url="url" :class-name="className" :filters="filters" :headers="headers" :post-data="postData" @update="update" :loader-start="loadingStart" :loader-end="loadingEnd" :method="'get'"></Pagination>
 </template>
 
 <style>

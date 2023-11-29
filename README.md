@@ -47,6 +47,8 @@ $ <Pagination url="your_api_server_url"></Pagination>
 | class-name        | String | NULL    | Optional - This is the wrapper class. You can use this to change the design |
 | headers           | Object | {}      | Optional - additional headers.                                              |
 | post-data         | Object | {}      | Optional - additional data.                                                 |
+| loader-start      | method | null    | Optional - This function will call when server api called started.          |
+| loader-end        | method | null    | Optional - This function will call when server api called completed.        |
 
 
 #### Events
@@ -54,8 +56,6 @@ $ <Pagination url="your_api_server_url"></Pagination>
 | Name        | Type   | Default | Details                                                               |
 |-------------|--------|---------|-----------------------------------------------------------------------|
 | update      | method | NULL    | Required - This function will be called upon successful fetching data |
-| loaderStart | method | NULL    | Required - This function will call when server api called started     |
-| loaderEnd   | method | NULL    | Required - This function will call when server api called completed   |
 
 
 Example:
