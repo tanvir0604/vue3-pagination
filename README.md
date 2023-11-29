@@ -34,21 +34,21 @@ $ <Pagination url="your_api_server_url"></Pagination>
 
 #### Props
 
-| Name              | Type   | Default | Details                                                                     |
-|-------------------|--------|---------|-----------------------------------------------------------------------------|
-| url               | String | NULL    | Required - Server url from where data will be fetched                       |
-| filters           | Object | {}      | Optional - Send all your search options here as a json data                 |
-| per-page          | Number | 20      | Optional - This determines how many items will be shown per page            |
-| default-page-no   | Number | 1       | Optional - First loaded page number                                         |
-| first-button-text | String | First   | Optional - To change the text of first button. Html format allowed          |
-| last-button-text  | String | Last    | Optional - To change the text of last button. Html format allowed           |
-| next-button-text  | String | '>>'    | Optional - To change the text of next button. Html format allowed           |
-| prev-button-text  | String | '<<'    | Optional - To change the text of previous button. Html format allowed       |
-| class-name        | String | NULL    | Optional - This is the wrapper class. You can use this to change the design |
-| headers           | Object | {}      | Optional - additional headers.                                              |
-| post-data         | Object | {}      | Optional - additional data.                                                 |
-| loader-start      | method | null    | Optional - This function will call when server api called started.          |
-| loader-end        | method | null    | Optional - This function will call when server api called completed.        |
+| Name              | Type     | Default | Details                                                                     |
+|-------------------|----------|---------|-----------------------------------------------------------------------------|
+| url               | String   | NULL    | Required - Server url from where data will be fetched                       |
+| filters           | Object   | {}      | Optional - Send all your search options here as a json data                 |
+| per-page          | Number   | 20      | Optional - This determines how many items will be shown per page            |
+| default-page-no   | Number   | 1       | Optional - First loaded page number                                         |
+| first-button-text | String   | First   | Optional - To change the text of first button. Html format allowed          |
+| last-button-text  | String   | Last    | Optional - To change the text of last button. Html format allowed           |
+| next-button-text  | String   | '>>'    | Optional - To change the text of next button. Html format allowed           |
+| prev-button-text  | String   | '<<'    | Optional - To change the text of previous button. Html format allowed       |
+| class-name        | String   | NULL    | Optional - This is the wrapper class. You can use this to change the design |
+| headers           | Object   | {}      | Optional - additional headers.                                              |
+| post-data         | Object   | {}      | Optional - additional data.                                                 |
+| loader-start      | Function | null    | Optional - This function will call when server api called started.          |
+| loader-end        | Function | null    | Optional - This function will call when server api called completed.        |
 
 
 #### Events
